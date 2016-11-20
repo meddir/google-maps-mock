@@ -1,5 +1,7 @@
 # Google Maps Mock #
 
+This is a mock for use when testing google maps.
+
 It is converted from https://github.com/angular-ui/angular-google-maps/blob/master/spec/coffee/bootstrap/google-api-mock.coffee
 and turned into a standalone module in vanilla javascript.
 
