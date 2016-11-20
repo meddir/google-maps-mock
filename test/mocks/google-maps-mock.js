@@ -1,6 +1,22 @@
 /*global _:true, angular:true, google:true */
-var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+var bind = function(fn, me) {
+    return function() {
+      return fn.apply(me, arguments);
+    };
+  },
+  extend = function(child, parent) {
+    for (var key in parent) {
+      if (hasProp.call(parent, key)) child[key] = parent[key];
+    }
+    function ctor() {
+      this.constructor = child;
+    }
+
+    ctor.prototype = parent.prototype;
+    child.prototype = new ctor();
+    child.__super__ = parent.prototype;
+    return child;
+  },
   hasProp = {}.hasOwnProperty;
 
 (function() {
@@ -322,7 +338,8 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
   };
   getMap = function() {
     var Map;
-    Map = function(opts) {};
+    Map = function(opts) {
+    };
     Map.prototype.center = {
       lat: function() {
         return 0;
@@ -349,10 +366,14 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
     Map.prototype.getControls = function() {
       return this.controls;
     };
-    Map.prototype.setOpts = function() {};
-    Map.prototype.setOptions = function() {};
-    Map.prototype.setZoom = function() {};
-    Map.prototype.setCenter = function() {};
+    Map.prototype.setOpts = function() {
+    };
+    Map.prototype.setOptions = function() {
+    };
+    Map.prototype.setZoom = function() {
+    };
+    Map.prototype.setCenter = function() {
+    };
     Map.prototype.getCoords = function() {
       if (Map.getCoords == null) {
         return {
@@ -444,9 +465,11 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
           return this.drawn = true;
         };
 
-        MarkerWithLabel.prototype.onRemove = function() {};
+        MarkerWithLabel.prototype.onRemove = function() {
+        };
 
-        MarkerWithLabel.prototype.onAdd = function() {};
+        MarkerWithLabel.prototype.onAdd = function() {
+        };
 
         return MarkerWithLabel;
 
@@ -554,7 +577,28 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
   GoogleApiMock = (function() {
     function GoogleApiMock() {
       this.mockMap = bind(this.mockMap, this);
-      this.mocks = [this.mockAPI, this.mockLatLng, this.mockLatLngBounds, this.mockControlPosition, this.mockAnimation, this.mockMapTypeId, this.mockOverlayView, this.mockOverlayView, this.mockEvent, this.mockInfoWindow, this.mockMarker, this.mockCircle, this.mockMVCArray, this.mockPoint, this.mockPolygon, this.mockPolyline, this.mockMap, this.mockPlaces, this.mockSearchBox];
+      this.mocks = [
+        this.mockAPI,
+        this.mockLatLng,
+        this.mockLatLngBounds,
+        this.mockControlPosition,
+        this.mockAnimation,
+        this.mockMapTypeId,
+        this.mockOverlayView,
+        this.mockOverlayView,
+        this.mockEvent,
+        this.mockInfoWindow,
+        this.mockMarker,
+        this.mockCircle,
+        this.mockMVCArray,
+        this.mockPoint,
+        this.mockPolygon,
+        this.mockPolyline,
+        this.mockMap,
+        this.mockPlaces,
+        this.mockSearchBox,
+        this.mockGeometry
+      ];
       this.initAll = function() {
         return this.mocks.forEach(function(fn) {
           return typeof fn === "function" ? fn() : void 0;
@@ -592,7 +636,8 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
 
     GoogleApiMock.prototype.mockSearchBox = function(SearchBox) {
       if (SearchBox == null) {
-        SearchBox = function() {};
+        SearchBox = function() {
+        };
       }
       return window.google.maps.places.SearchBox = SearchBox;
     };
@@ -603,10 +648,12 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
 
     GoogleApiMock.prototype.mockLatLngBounds = function(LatLngBounds) {
       if (LatLngBounds == null) {
-        LatLngBounds = function() {};
+        LatLngBounds = function() {
+        };
       }
       if (!(LatLngBounds.extend != null)) {
-        LatLngBounds.prototype.extend = function() {};
+        LatLngBounds.prototype.extend = function() {
+        };
       }
       return window.google.maps.LatLngBounds = LatLngBounds;
     };
@@ -662,9 +709,11 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
     GoogleApiMock.prototype.mockOverlayView = function(OverlayView) {
       if (OverlayView == null) {
         OverlayView = OverlayView = (function() {
-          function OverlayView() {}
+          function OverlayView() {
+          }
 
-          OverlayView.prototype.setMap = function() {};
+          OverlayView.prototype.setMap = function() {
+          };
 
           return OverlayView;
 
@@ -854,6 +903,26 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
         return this;
       };
     };
+
+    GoogleApiMock.prototype.mockGeometry = function(geometry) {
+      if (geometry != null) {
+        return window.google.maps.geometry = geometry;
+      }
+      var Encoding = {
+        encodePath: function(path) {
+          return JSON.stringify(path);
+        },
+        decodePath: function(path) {
+          return JSON.parse(path);
+        }
+      };
+      var Geometry = {
+        encoding: Encoding
+      };
+      return window.google.maps.geometry = Geometry;
+
+    };
+
 
     GoogleApiMock.prototype.getMarker = getMarker;
 

@@ -41,4 +41,28 @@ describe('Map', function() {
     initMap();
     expect(map).toBeDefined();
   });
+
+  it('should call geometry encode path', function() {
+    var map = new google.maps.Map();
+    var polyLine = createPolyLine(map);
+    var encodedPath = google.maps.geometry.encoding.encodePath(polyLine.getPath());
+    expect(encodedPath).toBeDefined();
+  });
+
+  function createPolyLine(map) {
+    var coordinates = [
+      {lat: 37.772, lng: -122.214},
+      {lat: 21.291, lng: -157.821},
+      {lat: -18.142, lng: 178.431},
+      {lat: -27.467, lng: 153.027}
+    ];
+    return new google.maps.Polyline({
+      map: map,
+      path: coordinates,
+      geodesic: true,
+      strokeColor: '#FF0000',
+      strokeOpacity: 1.0,
+      strokeWeight: 2
+    });
+  }
 });
